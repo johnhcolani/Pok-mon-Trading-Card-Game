@@ -61,16 +61,16 @@ class _MyHomePageState extends State<MyHomePage>
             width: MediaQuery.of(context).size.width,
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/background.png'),
+                image: AssetImage('assets/images/back02.png'),
                 fit: BoxFit.cover,
               ),
             ),
           ),
           Positioned.fill(
             child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              filter: ImageFilter.dilate(radiusX: 1, radiusY: 1),
               child: Container(
-                color: Colors.black.withOpacity(0.2),
+                color: Colors.white.withOpacity(0.5),
               ),
             ),
           ),
