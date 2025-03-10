@@ -54,22 +54,23 @@ class _MyHomePageState extends State<MyHomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: Stack(
-
         children: [
           Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-                image: DecorationImage(image: AssetImage('assets/images/background.png',),fit: BoxFit.cover)
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/background.png'),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           Positioned.fill(
             child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10), // Adjust blur intensity
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
               child: Container(
-                color: Colors.black.withOpacity(0.2), // Optional: Tint for better visibility
+                color: Colors.black.withOpacity(0.2),
               ),
             ),
           ),
@@ -81,11 +82,13 @@ class _MyHomePageState extends State<MyHomePage>
               },
               onPanEnd: (_) {
                 _controller.stop();
-                _controller.animateTo(
+                _controller
+                    .animateTo(
                   0.0,
                   duration: const Duration(milliseconds: 800),
                   curve: Curves.easeOutQuad,
-                ).then((_) => _controller.reset());
+                )
+                    .then((_) => _controller.reset());
               },
               onPanUpdate: (details) {
                 setState(() {
@@ -113,14 +116,18 @@ class _MyHomePageState extends State<MyHomePage>
                         return ShaderMask(
                           shaderCallback: (rect) {
                             return LinearGradient(
-                              begin: Alignment(-1.0, -1.0), // Move start further back
-                              end: Alignment(1.5, 1.5), // Extend beyond the card
+                              begin: Alignment(-1.0, -1.0), // Top-left
+                              end: Alignment(1.5, 1.5), // Bottom-right
                               colors: [
-                                Colors.white,
-                                Colors.transparent,
-                                Colors.white
+                                Colors.white, // Bright start
+                                Colors.white.withOpacity(0.5), // Semi-opaque middle
+                                Colors.white, // Bright end
                               ],
-                              stops: [-0.3, _controller.value, 1.2], // Adjust stops
+                              stops: [
+                                -0.3, // Start slightly before the card
+                                _controller.value, // Animate the middle
+                                1.2, // Extend beyond the card
+                              ],
                             ).createShader(rect);
                           },
                           child: Image.asset(
